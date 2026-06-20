@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin, unauthorized } from "@/lib/authMiddleware";
 import { connectDB } from "@/lib/mongodb";
-import { BlogPost } from "@/models/Blogpost";
+import { BlogPost } from "@/models/BlogPost";
 
 export const dynamic = "force-dynamic";
 
