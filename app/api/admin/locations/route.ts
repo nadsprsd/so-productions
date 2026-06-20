@@ -12,12 +12,12 @@ function readData() {
       fs.mkdirSync(path.dirname(dataFilePath), { recursive: true });
     }
     if (!fs.existsSync(dataFilePath)) {
-      const defaultData = [
-        { id: "1", city: "Johannesburg", province: "Gauteng", events: "180+" },
-        { id: "2", city: "Cape Town", province: "Western Cape", events: "120+" },
-        { id: "3", city: "Pretoria", province: "Gauteng", events: "60+" },
-        { id: "4", city: "Durban", province: "KwaZulu-Natal", events: "30+" },
-      ];
+     const defaultData = [
+  { id: "1", city: "Newark", province: "New Jersey", events: "180+" },
+  { id: "2", city: "Philadelphia", province: "Pennsylvania", events: "120+" },
+  { id: "3", city: "Atlantic City", province: "New Jersey", events: "60+" },
+  { id: "4", city: "New York City", province: "New York", events: "30+" },
+];
       fs.writeFileSync(dataFilePath, JSON.stringify(defaultData, null, 2));
       return defaultData;
     }

@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Plus, Edit, Trash2 } from "lucide-react";
 
 const mockWorks = [
-  { id: "1", title: "Johannesburg Jazz Festival", type: "Festival", location: "Johannesburg", date: "Mar 2024", status: "published" },
-  { id: "2", title: "Discovery Vitality Gala", type: "Corporate", location: "Sandton", date: "Nov 2023", status: "published" },
-  { id: "3", title: "Pinelands High School Musical", type: "School", location: "Cape Town", date: "Aug 2023", status: "published" },
+  { id: "1", title: "Atlantic City Music Festival", type: "Festival", location: "Atlantic City, NJ", date: "Mar 2026", status: "published" },
+  { id: "2", title: "Corporate Gala — Tech Summit", type: "Corporate", location: "Newark, NJ", date: "Nov 2025", status: "published" },
+  { id: "3", title: "Philadelphia Arts Showcase", type: "School", location: "Philadelphia, PA", date: "Aug 2025", status: "published" },
 ];
 
 export default function AdminWorks() {

@@ -5,10 +5,10 @@ import { MapPin, ArrowRight } from "lucide-react";
 
 // Fallback items in case the database is completely empty or server fails
 const fallbackLocations = [
-  { city: "Johannesburg", province: "Gauteng", events: "180+" },
-  { city: "Cape Town", province: "Western Cape", events: "120+" },
-  { city: "Pretoria", province: "Gauteng", events: "60+" },
-  { city: "Durban", province: "KwaZulu-Natal", events: "30+" },
+  { city: "Newark", province: "New Jersey", events: "180+" },
+  { city: "Philadelphia", province: "Pennsylvania", events: "120+" },
+  { city: "Atlantic City", province: "New Jersey", events: "60+" },
+  { city: "New York City", province: "New York", events: "30+" },
 ];
 
 interface LocationItem {

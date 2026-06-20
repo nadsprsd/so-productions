@@ -4,7 +4,7 @@ import { Save } from "lucide-react";
 
 export default function AdminSettings() {
   const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({ businessName: "So Productions", phone: "+27 (0) 00 000 0000", email: "hello@soproductions.co.za", whatsapp: "27000000000", address: "Johannesburg & Cape Town, South Africa", instagram: "", facebook: "", youtube: "" });
+  const [form, setForm] = useState({ businessName: "So Productions", phone: "+1 (000) 000-0000", email: "hello@soproductions.co.za", whatsapp: "+1 (000) 000-0000", address: "New Jersey & Philadelphia, USA", instagram: "", facebook: "", youtube: "" });
 
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
   const handleSave = async () => { await new Promise(r => setTimeout(r, 600)); setSaved(true); setTimeout(() => setSaved(false), 2000); };

@@ -19,10 +19,34 @@ interface LocationItem {
 
 // 🛠️ The initial default fallback list in case database records drop
 const fallbackLocations = [
-  { city: "Johannesburg", province: "Gauteng", description: "Our home base. We've worked in every major venue in Johannesburg, from the Sandton Convention Centre to outdoor festivals in Soweto.", events: "180+", services: ["Corporate Events","Live Concerts","School Functions"] },
-  { city: "Cape Town", province: "Western Cape", description: "A city of incredible venues. We service the Cape Winelands, city bowl venues, and outdoor events across the Western Cape.", events: "120+", services: ["Festivals","Corporate Events","Weddings"] },
-  { city: "Pretoria", province: "Gauteng", description: "Government events, university productions, and corporate functions in the administrative capital.", events: "60+", services: ["Government Events","University","Corporate"] },
-  { city: "Durban", province: "KwaZulu-Natal", description: "Coastal events, beachfront festivals, and conference audio in South Africa's busiest port city.", events: "30+", services: ["Outdoor Events","Festivals","Corporate"] },
+  { 
+    city: "Newark", 
+    province: "New Jersey", 
+    description: "Our primary hub. We service every major venue across Northern New Jersey, from professional convention centers to large-scale stadium productions.", 
+    events: "180+", 
+    services: ["Corporate Events", "Live Concerts", "School Functions"] 
+  },
+  { 
+    city: "Philadelphia", 
+    province: "Pennsylvania", 
+    description: "Serving the historic city center, university districts, and vibrant outdoor event spaces throughout the Greater Philadelphia region.", 
+    events: "120+", 
+    services: ["Festivals", "Corporate Events", "Weddings"] 
+  },
+  { 
+    city: "Atlantic City", 
+    province: "New Jersey", 
+    description: "Specializing in high-end resort audio, entertainment venue support, and large-scale beachfront festival productions.", 
+    events: "60+", 
+    services: ["Concerts", "Resort Events", "Corporate"] 
+  },
+  { 
+    city: "New York City", 
+    province: "New York", 
+    description: "Expert audio support for NYC's busiest venues, providing seamless sound engineering for high-profile city functions and events.", 
+    events: "30+", 
+    services: ["Outdoor Events", "Festivals", "Corporate"] 
+  },
 ];
 
 export function LocationsClient() {
@@ -73,8 +97,8 @@ export function LocationsClient() {
       <div className="container-main section-pad">
         <div className="loc-hero" style={{ textAlign: "center", marginBottom: "4rem" }}>
           <p className="eyebrow" style={{ marginBottom: "1rem" }}>Where We Work</p>
-          <h1 className="display-lg" style={{ color: "var(--color-platinum)" }}>Serving <span className="gold-gradient">South Africa</span></h1>
-          <p style={{ color: "var(--color-platinum-dim)", maxWidth: "520px", margin: "1.25rem auto 0", lineHeight: 1.75 }}>Based in Johannesburg and Cape Town, we travel nationally for the right event.</p>
+          <h1 className="display-lg" style={{ color: "var(--color-platinum)" }}>Serving <span className="gold-gradient">New Jersey and Philadelphia</span></h1>
+          <p style={{ color: "var(--color-platinum-dim)", maxWidth: "520px", margin: "1.25rem auto 0", lineHeight: 1.75 }}>Based in New Jersey and Philadelphia, we travel across the East Coast for the right production event.</p>
         </div>
         
         <div className="loc-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>

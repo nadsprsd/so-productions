@@ -269,7 +269,7 @@ export function Footer() {
                 },
                 {
                   icon: <MapPin size={14} />,
-                  text: "Johannesburg & Cape Town, South Africa",
+                  text: "New Jersey & Philadelphia, USA",
                   href: "/locations",
                 },
               ].map((item, i) => (
@@ -333,12 +333,35 @@ export function Footer() {
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "1rem",
+            gap: "1.5rem",
           }}
         >
-          <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.78rem" }}>
-            © {new Date().getFullYear()} So Productions. All rights reserved.
-          </p>
+          {/* 🛠️ FIXED: Structured side-by-side branding details layout */}
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.5rem 1rem" }}>
+            <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.78rem", margin: 0 }}>
+              © {new Date().getFullYear()} So Productions. All rights reserved.
+            </p>
+            <span style={{ color: "rgba(201,168,76,0.25)", fontSize: "0.75rem", display: "none", md: "inline" }}>|</span>
+            <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.78rem", margin: 0 }}>
+              Developed by{" "}
+              <a 
+                href="https://www.bizgrowonline.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  color: "var(--color-gold-light)", 
+                  textDecoration: "none", 
+                  fontWeight: 500,
+                  transition: "color 0.2s ease" 
+                }}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.color = "var(--color-gold)"}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.color = "var(--color-gold-light)"}
+              >
+                bizgrowonline
+              </a>
+            </p>
+          </div>
+
           <div style={{ display: "flex", gap: "1.5rem" }}>
             {legal.map((l) => (
               <Link

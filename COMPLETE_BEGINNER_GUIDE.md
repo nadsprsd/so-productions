@@ -419,7 +419,7 @@ Google will start indexing your site within a few days.
    - Business name: So Productions
    - Category: Sound Production Service (or Event Production Company)
    - Location: Add your address
-   - Service areas: Johannesburg, Cape Town, etc.
+   - Newark, Philadelphia, Atlantic City, New York, etc.
    - Phone number: your uncle's number
    - Website: your Vercel URL
 5. Verify the business (Google sends a postcard or calls)
@@ -518,7 +518,7 @@ This shows you exactly what error to fix.
 ✅ All 6 service detail pages
 ✅ Works/portfolio with case studies
 ✅ Gallery with masonry grid
-✅ Locations page (Johannesburg, Cape Town, Pretoria, Durban, etc.)
+✅ Locations page (Newark, Philadelphia, Atlantic City, New York, etc.)
 ✅ Blog page
 ✅ Testimonials with auto-rotating slider
 ✅ WhatsApp integration button

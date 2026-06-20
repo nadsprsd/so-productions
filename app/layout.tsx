@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "So Productions | Premium Sound & Event Production", template: "%s | So Productions" },
   description: "So Productions delivers world-class sound engineering, music production, DJ services, stage systems, and live event audio across South Africa.",
-  keywords: ["sound production","event production","sound engineering","DJ services","music production","stage sound","South Africa","Johannesburg","Cape Town"],
+  keywords: ["sound production","event production","sound engineering","DJ services","music production","stage sound","New Jersey", "Philadelphia", "New York", "USA"],
   openGraph: {
     type: "website", locale: "en_ZA", url: siteUrl, siteName: "So Productions",
     title: "So Productions | Premium Sound & Event Production",

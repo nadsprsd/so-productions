@@ -21,9 +21,33 @@ interface WorkItem {
 }
 
 const fallbackWorks = [
-  { id: "1", title: "Johannesburg Jazz Festival", type: "Festival", location: "Johannesburg, GP", date: "March 2024", tags: ["LINE ARRAY", "FOH", "OUTDOOR"], image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80" },
-  { id: "2", title: "Discovery Vitality Gala", type: "Corporate", location: "Sandton, GP", date: "November 2023", tags: ["CORPORATE", "LIVE BAND", "INDOOR"], image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80" },
-  { id: "3", title: "Pinelands High School Musical", type: "School", location: "Cape Town, WC", date: "August 2023", tags: ["SCHOOL", "THEATRE", "WIRELESS"], image: "https://images.unsplash.com/photo-1501612780327-45045538702b?w=600&q=80" },
+  { 
+    id: "1", 
+    title: "Atlantic City Music Festival", 
+    type: "Festival", 
+    location: "Atlantic City, NJ", 
+    date: "March 2026", 
+    tags: ["LINE ARRAY", "FOH", "OUTDOOR"], 
+    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80" 
+  },
+  { 
+    id: "2", 
+    title: "Corporate Gala — Tech Summit", 
+    type: "Corporate", 
+    location: "Newark, NJ", 
+    date: "November 2025", 
+    tags: ["CORPORATE", "LIVE BAND", "INDOOR"], 
+    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80" 
+  },
+  { 
+    id: "3", 
+    title: "Philadelphia Arts Showcase", 
+    type: "School", 
+    location: "Philadelphia, PA", 
+    date: "August 2025", 
+    tags: ["SCHOOL", "THEATRE", "WIRELESS"], 
+    image: "https://images.unsplash.com/photo-1501612780327-45045538702b?w=600&q=80" 
+  },
 ];
 
 export default function WorksPage() {

@@ -96,7 +96,7 @@ export default function ContactPage() {
             {[
               { icon: <Phone size={20} />, label: "Phone", value: "+27 (0) 00 000 0000", href: "tel:+270000000000" },
               { icon: <Mail size={20} />, label: "Email", value: "hello@soproductions.co.za", href: "mailto:hello@soproductions.co.za" },
-              { icon: <MapPin size={20} />, label: "Location", value: "Johannesburg & Cape Town, South Africa", href: "/locations" },
+              { icon: <MapPin size={20} />, label: "Location", value: "New Jersey & Philadelphia, USA", href: "/locations" },
               { icon: <Clock size={20} />, label: "Hours", value: "Mon–Fri 8am–6pm · Sat 9am–3pm", href: undefined },
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
