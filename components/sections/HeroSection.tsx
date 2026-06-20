@@ -9,16 +9,21 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 🛠️ EXPANDED AMBIENT CHORDS DATASET: More instances with balanced variations
+// 🛠️ MULTI-CHORD SYSTEM: Expanded matrix arrays across high-density random view layers
 const NOTES = [
-  { x: "6%", y: "20%", size: 24, delay: 0, dur: 7 },
-  { x: "88%", y: "15%", size: 18, delay: 1.5, dur: 8 },
-  { x: "12%", y: "65%", size: 20, delay: 0.8, dur: 6 },
-  { x: "82%", y: "58%", size: 16, delay: 2.2, dur: 7.5 },
-  { x: "48%", y: "78%", size: 14, delay: 1.8, dur: 6.5 },
-  { x: "25%", y: "40%", size: 18, delay: 3.0, dur: 9 },
-  { x: "72%", y: "35%", size: 22, delay: 0.5, dur: 8.5 },
-  { x: "35%", y: "85%", size: 15, delay: 4.2, dur: 7 }
+  { x: "5%", y: "15%", size: 24, delay: 0 },
+  { x: "85%", y: "12%", size: 18, delay: 1.2 },
+  { x: "10%", y: "60%", size: 20, delay: 0.5 },
+  { x: "78%", y: "55%", size: 16, delay: 2.0 },
+  { x: "45%", y: "75%", size: 15, delay: 1.5 },
+  { x: "22%", y: "35%", size: 19, delay: 2.8 },
+  { x: "70%", y: "28%", size: 22, delay: 0.8 },
+  { x: "32%", y: "82%", size: 14, delay: 3.5 },
+  // 🛠️ Extra chord elements added to dense up laptop/mobile visibility spreads
+  { x: "18%", y: "25%", size: 16, delay: 1.9 },
+  { x: "62%", y: "18%", size: 21, delay: 2.4 },
+  { x: "88%", y: "70%", size: 15, delay: 0.2 },
+  { x: "28%", y: "50%", size: 23, delay: 3.1 }
 ];
 
 export function HeroSection() {
@@ -42,19 +47,26 @@ export function HeroSection() {
         .fromTo(".hero-cta", { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.4")
         .fromTo(".hero-stats-row", { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.3");
 
-      // 🛠️ BALANCED SPEED DRIFT: Smooth, continuous floating note tracking loops
-      gsap.fromTo(".float-note",
-        { y: 30, opacity: 0, scale: 0.8 },
-        { 
-          y: -60, 
-          opacity: 0.35, 
-          scale: 1, 
-          stagger: 0.25, 
-          duration: 4.5, 
-          ease: "power1.out",
-          delay: 0.5 
-        }
-      );
+      // 🛠️ FLUID INFINITE TIMING ENGINE: Animates all chord layers continuously with an elegant, natural float speed
+      const chordElements = document.querySelectorAll(".hero-floating-chord");
+      chordElements.forEach((note) => {
+        const delayAttr = parseFloat(note.getAttribute("data-delay") || "0");
+        
+        // Setup initial entry fade
+        gsap.fromTo(note, { opacity: 0 }, { opacity: 0.35, duration: 1, delay: delayAttr });
+        
+        // Run continuous organic motion looping
+        gsap.to(note, {
+          y: () => gsap.utils.random(-50, -90),
+          x: () => gsap.utils.random(-15, 15),
+          rotation: () => gsap.utils.random(-15, 15),
+          duration: () => gsap.utils.random(4.5, 6.5), // 🛠️ Tailored speed parameter: Not stuck, perfectly active
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: delayAttr
+        });
+      });
 
       ScrollTrigger.create({
         trigger: heroRef.current,
@@ -68,16 +80,15 @@ export function HeroSection() {
         },
       });
 
-      // 🛠️ ACTIVE WAVEFORM OSCILLATION: Restored animation looping with balanced, natural cadence
       const bars = document.querySelectorAll(".hero-wave-bar");
       bars.forEach((bar, i) => {
         gsap.to(bar, { 
-          scaleY: gsap.utils.random(0.25, 0.95), 
-          duration: gsap.utils.random(0.5, 0.95), 
+          scaleY: gsap.utils.random(0.3, 0.9), 
+          duration: gsap.utils.random(0.5, 0.9), 
           repeat: -1, 
           yoyo: true, 
           ease: "sine.inOut", 
-          delay: i * 0.04 
+          delay: i * 0.03 
         });
       });
     }, heroRef);
@@ -106,17 +117,27 @@ export function HeroSection() {
       {/* Floating Ambient Chords Canvas */}
       <div ref={notesRef} style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1 }}>
         {NOTES.map((note, i) => (
-          <div key={i} className="float-note" style={{ position: "absolute", left: note.x, top: note.y, opacity: 0 }}>
+          <div 
+            key={i} 
+            className="hero-floating-chord" 
+            data-delay={note.delay}
+            style={{ 
+              position: "absolute", 
+              left: note.x, 
+              top: note.y, 
+              opacity: 0,
+              display: isMobile && i > 6 ? "none" : "block" // 🛠️ Drops trailing elements slightly on phones to maximize layout contrast
+            }}
+          >
             <MusicNote size={note.size} />
           </div>
         ))}
       </div>
 
       <div className="container-main" style={{ textAlign: "center", position: "relative", zIndex: 2, width: "100%", padding: "0 1rem" }}>
-        {/* 🛠️ HIGH-DENSITY WAVEFORM METER BAR GRID */}
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: isMobile ? "2px" : "3px", height: "36px", marginBottom: "2rem" }}>
-          {Array.from({ length: isMobile ? 18 : 28 }).map((_, i) => (
-            <div key={i} className="hero-wave-bar" style={{ width: "3px", height: `${8 + Math.sin(i * 0.4) * 8}px`, background: "linear-gradient(to top, var(--color-gold-dim), var(--color-gold-light))", borderRadius: "1.5px", transformOrigin: "bottom" }} />
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: isMobile ? "2px" : "3px", height: "32px", marginBottom: "2rem" }}>
+          {Array.from({ length: isMobile ? 20 : 32 }).map((_, i) => (
+            <div key={i} className="hero-wave-bar" style={{ width: "3px", height: `${10 + Math.sin(i * 0.4) * 7}px`, background: "linear-gradient(to top, var(--color-gold-dim), var(--color-gold-light))", borderRadius: "1.5px", transformOrigin: "bottom" }} />
           ))}
         </div>
 

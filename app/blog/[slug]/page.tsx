@@ -17,11 +17,15 @@ export default function BlogPostDetail({ params }: PageProps) {
   useEffect(() => {
     async function loadArticle() {
       try {
-        const res = await fetch("/api/admin/blog");
+        // 🛠️ FIXED: Added identical timestamp cache-buster parameter and explicit network fetch flags
+        const res = await fetch(`/api/admin/blog?t=${Date.now()}`, {
+          cache: "no-store",
+          headers: { "Cache-Control": "no-cache" }
+        });
         if (res.ok) {
           const allPosts = await res.json();
-          // Match by the URL text slug
-          const match = allPosts.find((p: any) => p.slug === slug);
+          // 🛠️ FIXED: Blocks search matches if an article's status is explicitly marked as deleted/draft
+          const match = allPosts.find((p: any) => p.slug === slug && (!p.status || p.status === "published"));
           setPost(match || null);
         }
       } catch (err) {
@@ -36,7 +40,7 @@ export default function BlogPostDetail({ params }: PageProps) {
   if (loading) {
     return (
       <div style={{ padding: "12rem 2rem", background: "var(--color-obsidian)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", color: "var(--color-platinum-dim)" }}>
-        <Loader2 size={20} style={{ animation: "spin 1s linear infinite" }} /> Opening Article...
+        <Loader2 size={20} className="animate-spin" /> Opening Article...
       </div>
     );
   }
@@ -70,12 +74,11 @@ export default function BlogPostDetail({ params }: PageProps) {
           {new Date(post.createdAt).toLocaleDateString("en-ZA", { day: "numeric", month: "long", year: "numeric" })}
         </div>
 
-       {/* Article Body Elements Rendering */}
-<div style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "rgba(255,255,255,0.85)", whiteSpace: "pre-wrap" }}>
-  {post.content.split("\n").map((paragraph: string, idx: number) => (
-    <p key={idx} style={{ marginBottom: "1.5rem" }}>{paragraph}</p>
-  ))}
-</div>
+        <div style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "rgba(255,255,255,0.85)", whiteSpace: "pre-wrap" }}>
+          {post.content.split("\n").map((paragraph: string, idx: number) => (
+            <p key={idx} style={{ marginBottom: "1.5rem" }}>{paragraph}</p>
+          ))}
+        </div>
       </div>
     </div>
   );

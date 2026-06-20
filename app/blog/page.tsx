@@ -47,10 +47,13 @@ export default function PublicBlogPage() {
   useEffect(() => {
     async function fetchPublicPosts() {
       try {
-        const res = await fetch("/api/admin/blog");
+        // 🛠️ FIXED: Added a timestamp cache-buster query string parameter (?t=...)
+        const res = await fetch(`/api/admin/blog?t=${Date.now()}`, {
+          cache: "no-store",
+          headers: { "Cache-Control": "no-cache" }
+        });
         if (res.ok) {
           const data = await res.json();
-          // Safe checking: Display post if status field matches published or is omitted entirely
           const published = data.filter((p: any) => !p.status || p.status === "published");
           
           if (published.length > 0) {
