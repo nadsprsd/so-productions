@@ -68,12 +68,12 @@ export default function BlogPostDetail({ params }: PageProps) {
           {new Date(post.createdAt).toLocaleDateString("en-ZA", { day: "numeric", month: "long", year: "numeric" })}
         </div>
 
-        {/* Article Body Elements Rendering */}
-        <div style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "rgba(255,255,255,0.85)", whitespace: "pre-wrap" }}>
-          {post.content.split("\n").map((paragraph: string, idx: number) => (
-            <p key={idx} style={{ marginBottom: "1.5rem" }}>{paragraph}</p>
-          ))}
-        </div>
+       {/* Article Body Elements Rendering */}
+<div style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "rgba(255,255,255,0.85)", whiteSpace: "pre-wrap" }}>
+  {post.content.split("\n").map((paragraph: string, idx: number) => (
+    <p key={idx} style={{ marginBottom: "1.5rem" }}>{paragraph}</p>
+  ))}
+</div>
       </div>
     </div>
   );
