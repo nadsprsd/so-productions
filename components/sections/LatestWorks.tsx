@@ -20,7 +20,6 @@ interface WorkItem {
   image?: string;
 }
 
-// Fallback records matching layout parameters if data stream is empty
 const fallbackWorks = [
   {
     id: "1",
@@ -53,7 +52,7 @@ export function LatestWorks() {
   const [dbWorks, setDbWorks] = useState<WorkItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. Fetch real production dashboard entries on load
+  // 1. Fetch production backend database rows on mount
   useEffect(() => {
     async function loadWorks() {
       try {
@@ -71,7 +70,7 @@ export function LatestWorks() {
     loadWorks();
   }, []);
 
-  // 2. Run GSAP layout entry animations once components are mounted
+  // 2. Trigger GSAP scroll timelines when dynamic arrays mount completely
   useEffect(() => {
     if (loading || dbWorks.length === 0) return;
 
@@ -84,15 +83,21 @@ export function LatestWorks() {
     return () => ctx.revert();
   }, [loading, dbWorks]);
 
-  if (loading || dbWorks.length === 0) return null;
+  // 🛠️ CRITICAL FACTOR: Strict execution guard protects Next.js pre-render routines from data parsing failures
+  if (loading || dbWorks.length === 0 || !dbWorks[0]) {
+    return (
+      <div style={{ padding: "5rem 2rem", background: "var(--color-obsidian-light)", color: "var(--color-platinum-dim)", textAlign: "center" }}>
+        Loading project showcase profiles...
+      </div>
+    );
+  }
 
   const featured = dbWorks[0];
-  const secondaryWorks = dbWorks.slice(1, 3); // Grab up to the next 2 works items safely
+  const secondaryWorks = dbWorks.slice(1, 3);
 
   return (
     <section ref={ref} className="section-pad" style={{ background: "var(--color-obsidian-light)" }}>
       <div className="container-main">
-        {/* 🛠️ FIXED: Removed the invalid justifyWith property assignment */}
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", marginBottom: "3.5rem" }}>
           <div>
             <p className="eyebrow" style={{ marginBottom: "1rem" }}>Proof of Work</p>
@@ -102,7 +107,7 @@ export function LatestWorks() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          {/* Featured work - large element */}
+          {/* Featured work - Top Banner Display Element */}
           <Link href={`/works/${featured.id}`} className="work-card glass" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0", opacity: 0, textDecoration: "none", borderRadius: "1.25rem", overflow: "hidden", minHeight: "320px" }}
             onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(201,168,76,0.3)"; }}
             onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(201,168,76,0.12)"; }}
@@ -136,7 +141,7 @@ export function LatestWorks() {
             </div>
           </Link>
 
-          {/* Smaller secondary grid works */}
+          {/* Secondary Subgrid Segment Elements */}
           {secondaryWorks.length > 0 && (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
               {secondaryWorks.map((work) => (
