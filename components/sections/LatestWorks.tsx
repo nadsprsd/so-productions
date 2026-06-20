@@ -20,7 +20,7 @@ interface WorkItem {
   image?: string;
 }
 
-// 🛠️ Reliable fallback records matching your screenshot layout if data/works.json is empty
+// Fallback records matching layout parameters if data stream is empty
 const fallbackWorks = [
   {
     id: "1",
@@ -71,7 +71,7 @@ export function LatestWorks() {
     loadWorks();
   }, []);
 
-  // 2. Run GSAP layout entry animations once the dynamic elements are mounted completely
+  // 2. Run GSAP layout entry animations once components are mounted
   useEffect(() => {
     if (loading || dbWorks.length === 0) return;
 
@@ -92,7 +92,8 @@ export function LatestWorks() {
   return (
     <section ref={ref} className="section-pad" style={{ background: "var(--color-obsidian-light)" }}>
       <div className="container-main">
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyWith: "space-between", justifyContent: "space-between", gap: "2rem", marginBottom: "3.5rem" }}>
+        {/* 🛠️ FIXED: Removed the invalid justifyWith property assignment */}
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", marginBottom: "3.5rem" }}>
           <div>
             <p className="eyebrow" style={{ marginBottom: "1rem" }}>Proof of Work</p>
             <h2 className="display-lg" style={{ color: "var(--color-platinum)" }}>Recent <span className="gold-gradient">projects</span></h2>
@@ -161,7 +162,7 @@ export function LatestWorks() {
                       ))}
                     </div>
                     <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", color: "var(--color-platinum)", fontWeight: 400, marginBottom: "0.5rem" }}>{work.title}</h3>
-                    <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.82rem", lineHeight: 1.7 }}>
+                    <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.82rem", lineHeight: 1.7}>
                       {work.challenge || work.description}
                     </p>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "1rem", color: "var(--color-gold)", fontSize: "0.75rem" }}>
