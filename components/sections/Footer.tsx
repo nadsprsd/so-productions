@@ -341,7 +341,12 @@ export function Footer() {
             <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.78rem", margin: 0 }}>
               © {new Date().getFullYear()} So Productions. All rights reserved.
             </p>
-            <span style={{ color: "rgba(201,168,76,0.25)", fontSize: "0.75rem", display: "none", md: "inline" }}>|</span>
+            <span 
+  className="hidden md:inline" // 🛠️ Use Tailwind classes instead of the 'md' style property
+  style={{ color: "rgba(201,168,76,0.25)", fontSize: "0.75rem" }}
+>
+  |
+</span>
             <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.78rem", margin: 0 }}>
               Developed by{" "}
               <a 
