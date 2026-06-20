@@ -7,6 +7,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export default function BlogPostDetail({ params }: PageProps) {
   const { slug } = use(params);
   const [post, setPost] = useState<any>(null);

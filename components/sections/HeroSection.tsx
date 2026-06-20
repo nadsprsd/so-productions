@@ -9,12 +9,16 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// 🛠️ EXPANDED AMBIENT CHORDS DATASET: More instances with balanced variations
 const NOTES = [
-  { x: "8%", y: "25%", size: 22, delay: 0, dur: 5 },
-  { x: "84%", y: "18%", size: 17, delay: 1.2, dur: 6 },
-  { x: "14%", y: "68%", size: 19, delay: 0.6, dur: 4.5 },
-  { x: "77%", y: "64%", size: 15, delay: 2, dur: 5.5 },
-  { x: "50%", y: "80%", size: 13, delay: 1.5, dur: 4 },
+  { x: "6%", y: "20%", size: 24, delay: 0, dur: 7 },
+  { x: "88%", y: "15%", size: 18, delay: 1.5, dur: 8 },
+  { x: "12%", y: "65%", size: 20, delay: 0.8, dur: 6 },
+  { x: "82%", y: "58%", size: 16, delay: 2.2, dur: 7.5 },
+  { x: "48%", y: "78%", size: 14, delay: 1.8, dur: 6.5 },
+  { x: "25%", y: "40%", size: 18, delay: 3.0, dur: 9 },
+  { x: "72%", y: "35%", size: 22, delay: 0.5, dur: 8.5 },
+  { x: "35%", y: "85%", size: 15, delay: 4.2, dur: 7 }
 ];
 
 export function HeroSection() {
@@ -38,16 +42,17 @@ export function HeroSection() {
         .fromTo(".hero-cta", { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.4")
         .fromTo(".hero-stats-row", { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.3");
 
+      // 🛠️ BALANCED SPEED DRIFT: Smooth, continuous floating note tracking loops
       gsap.fromTo(".float-note",
-        { y: 20, opacity: 0, scale: 0.8 },
+        { y: 30, opacity: 0, scale: 0.8 },
         { 
-          y: -40, 
-          opacity: 0.25, 
+          y: -60, 
+          opacity: 0.35, 
           scale: 1, 
-          stagger: 0.4, 
-          duration: 3.5, 
-          ease: "power1.inOut",
-          delay: 1 
+          stagger: 0.25, 
+          duration: 4.5, 
+          ease: "power1.out",
+          delay: 0.5 
         }
       );
 
@@ -63,15 +68,16 @@ export function HeroSection() {
         },
       });
 
+      // 🛠️ ACTIVE WAVEFORM OSCILLATION: Restored animation looping with balanced, natural cadence
       const bars = document.querySelectorAll(".hero-wave-bar");
       bars.forEach((bar, i) => {
         gsap.to(bar, { 
-          scaleY: gsap.utils.random(0.3, 0.8), 
-          duration: gsap.utils.random(0.8, 1.4), 
+          scaleY: gsap.utils.random(0.25, 0.95), 
+          duration: gsap.utils.random(0.5, 0.95), 
           repeat: -1, 
           yoyo: true, 
           ease: "sine.inOut", 
-          delay: i * 0.06 
+          delay: i * 0.04 
         });
       });
     }, heroRef);
@@ -97,6 +103,7 @@ export function HeroSection() {
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.7) 60%, rgba(8,8,8,0.98) 100%)" }} />
       </div>
 
+      {/* Floating Ambient Chords Canvas */}
       <div ref={notesRef} style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1 }}>
         {NOTES.map((note, i) => (
           <div key={i} className="float-note" style={{ position: "absolute", left: note.x, top: note.y, opacity: 0 }}>
@@ -106,9 +113,10 @@ export function HeroSection() {
       </div>
 
       <div className="container-main" style={{ textAlign: "center", position: "relative", zIndex: 2, width: "100%", padding: "0 1rem" }}>
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "3px", height: "32px", marginBottom: "2rem" }}>
-          {Array.from({ length: 14 }).map((_, i) => (
-            <div key={i} className="hero-wave-bar" style={{ width: "3px", height: `${10 + Math.sin(i * 0.5) * 6}px`, background: "linear-gradient(to top, var(--color-gold-dim), var(--color-gold-light))", borderRadius: "1.5px", transformOrigin: "bottom" }} />
+        {/* 🛠️ HIGH-DENSITY WAVEFORM METER BAR GRID */}
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: isMobile ? "2px" : "3px", height: "36px", marginBottom: "2rem" }}>
+          {Array.from({ length: isMobile ? 18 : 28 }).map((_, i) => (
+            <div key={i} className="hero-wave-bar" style={{ width: "3px", height: `${8 + Math.sin(i * 0.4) * 8}px`, background: "linear-gradient(to top, var(--color-gold-dim), var(--color-gold-light))", borderRadius: "1.5px", transformOrigin: "bottom" }} />
           ))}
         </div>
 
@@ -130,7 +138,6 @@ export function HeroSection() {
           <Link href="/works" className="btn-ghost" style={{ padding: "0.7rem 1.5rem", fontSize: "0.78rem" }}>View Our Work</Link>
         </div>
 
-        {/* 🛠️ FIXED: Uses a safe explicit wrapper class to bypass global flex override rules */}
         <div className="hero-stats-row hero-stats glass-stats-wrapper" style={{ display: isMobile ? "none" : "inline-flex", flexWrap: "wrap", justifyContent: "center", opacity: 0, borderRadius: "1rem", overflow: "hidden" }}>
           {[
             { value: "6+", label: "Years" },
