@@ -20,7 +20,7 @@ interface WorkItem {
   image?: string;
 }
 
-const fallbackWorks = [
+const fallbackWorks: WorkItem[] = [
   {
     id: "1",
     title: "Johannesburg Jazz Festival",
@@ -52,7 +52,6 @@ export function LatestWorks() {
   const [dbWorks, setDbWorks] = useState<WorkItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. Fetch production backend database rows on mount
   useEffect(() => {
     async function loadWorks() {
       try {
@@ -70,10 +69,8 @@ export function LatestWorks() {
     loadWorks();
   }, []);
 
-  // 2. Trigger GSAP scroll timelines when dynamic arrays mount completely
   useEffect(() => {
     if (loading || dbWorks.length === 0) return;
-
     const ctx = gsap.context(() => {
       gsap.fromTo(".work-card", 
         { y: 50, opacity: 0 }, 
@@ -83,7 +80,6 @@ export function LatestWorks() {
     return () => ctx.revert();
   }, [loading, dbWorks]);
 
-  // 🛠️ CRITICAL FACTOR: Strict execution guard protects Next.js pre-render routines from data parsing failures
   if (loading || dbWorks.length === 0 || !dbWorks[0]) {
     return (
       <div style={{ padding: "5rem 2rem", background: "var(--color-obsidian-light)", color: "var(--color-platinum-dim)", textAlign: "center" }}>
@@ -107,11 +103,8 @@ export function LatestWorks() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          {/* Featured work - Top Banner Display Element */}
-          <Link href={`/works/${featured.id}`} className="work-card glass" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0", opacity: 0, textDecoration: "none", borderRadius: "1.25rem", overflow: "hidden", minHeight: "320px" }}
-            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(201,168,76,0.3)"; }}
-            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(201,168,76,0.12)"; }}
-          >
+          {/* Featured element */}
+          <Link href={`/works/${featured.id}`} className="work-card glass" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0", opacity: 0, textDecoration: "none", borderRadius: "1.25rem", overflow: "hidden", minHeight: "320px" }}>
             <div style={{ position: "relative", minHeight: "280px" }}>
               <Image 
                 src={featured.image || "https://images.unsplash.com/photo-1501612780327-45045538702b?w=900&q=75"} 
@@ -141,14 +134,11 @@ export function LatestWorks() {
             </div>
           </Link>
 
-          {/* Secondary Subgrid Segment Elements */}
+          {/* Subgrid elements */}
           {secondaryWorks.length > 0 && (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
               {secondaryWorks.map((work) => (
-                <Link key={work.id} href={`/works/${work.id}`} className="work-card glass" style={{ display: "block", opacity: 0, textDecoration: "none", borderRadius: "1rem", overflow: "hidden", transition: "border-color 0.3s" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.3)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.12)"; }}
-                >
+                <Link key={work.id} href={`/works/${work.id}`} className="work-card glass" style={{ display: "block", opacity: 0, textDecoration: "none", borderRadius: "1rem", overflow: "hidden" }}>
                   <div style={{ position: "relative", aspectRatio: "16/8" }}>
                     <Image 
                       src={work.image || "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=700&q=75"} 
@@ -167,7 +157,7 @@ export function LatestWorks() {
                       ))}
                     </div>
                     <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", color: "var(--color-platinum)", fontWeight: 400, marginBottom: "0.5rem" }}>{work.title}</h3>
-                    <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.82rem", lineHeight: 1.7}>
+                    <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.82rem", lineHeight: 1.7 }}>
                       {work.challenge || work.description}
                     </p>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "1rem", color: "var(--color-gold)", fontSize: "0.75rem" }}>
