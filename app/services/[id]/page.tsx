@@ -32,7 +32,14 @@ export default function ServiceDetailPage({ params }: PageProps) {
 
   if (loading) return <div style={{ padding: "12rem 2rem", background: "var(--color-obsidian)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-platinum-dim)" }}><Loader2 size={20} className="animate-spin" /> Loading setup configurations...</div>;
   
-  if (!service) return <div style={{ padding: "12rem 2rem", background: "var(--color-obsidian)", minHeight: "100vh", color: "var(--color-platinum)", textAlignment: "center" }}><h2>Service parameters not found.</h2><Link href="/services" style={{ color: "var(--color-gold)" }}>Return to portfolio services overview</Link></div>;
+  if (!service) return (
+  <div style={{ padding: "12rem 2rem", background: "var(--color-obsidian)", minHeight: "100vh", color: "var(--color-platinum)", textAlign: "center" }}>
+    <h2>Service parameters not found.</h2>
+    <Link href="/services" style={{ color: "var(--color-gold)" }}>
+      Return to portfolio services overview
+    </Link>
+  </div>
+);
 
   return (
     <div style={{ background: "var(--color-obsidian)", minHeight: "100vh", color: "var(--color-platinum)", paddingTop: "8rem" }}>
