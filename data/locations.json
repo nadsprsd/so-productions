@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1781901930707",
+    "city": "New York City",
+    "province": "New York ",
+    "events": "10"
+  },
+  {
+    "id": "1781901957167",
+    "city": "Philadelphia",
+    "province": "Pennsylvania:",
+    "events": "5"
+  },
+  {
+    "id": "1781901977562",
+    "city": "Princeton",
+    "province": "",
+    "events": "2"
+  },
+  {
+    "id": "1781902001607",
+    "city": "Atlantic City",
+    "province": "",
+    "events": "20"
+  }
+]
