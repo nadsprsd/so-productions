@@ -39,8 +39,16 @@ export function HeroSection() {
         .fromTo(".hero-stats-row", { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.3");
 
       gsap.fromTo(".float-note",
-        { opacity: 0, scale: 0 },
-        { opacity: 0.25, scale: 1, stagger: 0.15, duration: 0.8, ease: "power2.out", delay: 0.8 }
+        { y: 20, opacity: 0, scale: 0.8 },
+        { 
+          y: -40, 
+          opacity: 0.25, 
+          scale: 1, 
+          stagger: 0.4, 
+          duration: 3.5, 
+          ease: "power1.inOut",
+          delay: 1 
+        }
       );
 
       ScrollTrigger.create({
@@ -58,12 +66,12 @@ export function HeroSection() {
       const bars = document.querySelectorAll(".hero-wave-bar");
       bars.forEach((bar, i) => {
         gsap.to(bar, { 
-          scaleY: gsap.utils.random(0.2, 1), 
-          duration: gsap.utils.random(0.5, 0.9), 
+          scaleY: gsap.utils.random(0.3, 0.8), 
+          duration: gsap.utils.random(0.8, 1.4), 
           repeat: -1, 
           yoyo: true, 
           ease: "sine.inOut", 
-          delay: i * 0.03 
+          delay: i * 0.06 
         });
       });
     }, heroRef);
@@ -122,8 +130,8 @@ export function HeroSection() {
           <Link href="/works" className="btn-ghost" style={{ padding: "0.7rem 1.5rem", fontSize: "0.78rem" }}>View Our Work</Link>
         </div>
 
-        {/* 🛠️ FIXED: Completely dropped or hidden on mobile to stop double trust stack layout clash */}
-        <div className="hero-stats-row hero-stats glass" style={{ display: isMobile ? "none" : "inline-flex", flexWrap: "wrap", justifyContent: "center", opacity: 0, borderRadius: "1rem", overflow: "hidden" }}>
+        {/* 🛠️ FIXED: Uses a safe explicit wrapper class to bypass global flex override rules */}
+        <div className="hero-stats-row hero-stats glass-stats-wrapper" style={{ display: isMobile ? "none" : "inline-flex", flexWrap: "wrap", justifyContent: "center", opacity: 0, borderRadius: "1rem", overflow: "hidden" }}>
           {[
             { value: "6+", label: "Years" },
             { value: "400+", label: "Events" },

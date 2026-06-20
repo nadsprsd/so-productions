@@ -14,26 +14,61 @@ interface PostItem {
   status: string;
 }
 
+// Premium fallback dataset to display if the database engine is empty
+const fallbackPosts: PostItem[] = [
+  {
+    id: "b1",
+    title: "The Science of Sub-Bass: Engineering Clean Low-End for Live Concerts",
+    slug: "science-of-sub-bass",
+    category: "Sound Engineering",
+    excerpt: "Discover how to manage phase cancellation and deploy cardiod sub configurations to keep your low-end hitting perfectly clear.",
+    content: "When engineering live sound, low-end frequencies present the ultimate challenge... tracking alignment, time delays, and multi-cabinet coupling change the room context completely.",
+    status: "published"
+  },
+  {
+    id: "b2",
+    title: "Top 5 Wireless Microphone Systems for Corporate Events in 2026",
+    slug: "wireless-mic-systems-corporate",
+    category: "Audio Systems",
+    excerpt: "An in-depth review of spectrum efficiency, encryption security, and real-world range handling under intense signal congestion.",
+    content: "Corporate environments demand absolute stability. Shifting spectrum profiles mean digital signal protection tracking is no longer optional.",
+    status: "published"
+  },
+  {
+    id: "b3",
+    title: "Behind the Scenes: Managing FOH Audio for 3,500+ Outdoor Festivals",
+    slug: "behind-the-scenes-foh-festival",
+    category: "Festival Sound",
+    excerpt: "How we configured a 96-channel console array profile path and coordinated backline changeovers under tight production limits.",
+    content: "Outdoor festivals test more than your audio gear; they test your baseline operating limits under extreme real-world environmental elements.",
+    status: "published"
+  }
+];
+
 export function BlogPreview() {
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 🛠️ Fetch live items directly from your local file system database engine
   useEffect(() => {
     async function fetchLatestPosts() {
       try {
         const res = await fetch("/api/admin/blog");
         if (res.ok) {
           const data = await res.json();
-          // Filter out drafts and grab only the 3 most recent published articles
-          const published = data
-            .filter((p: any) => p.status === "published")
-            .slice(-3) // Grabs the latest 3 items
-            .reverse(); // Keeps newest posts at the front of the list
-          setPosts(published);
+          // Safe protection maps posts cleanly whether explicit status is matched or missing
+          const published = data.filter((p: any) => !p.status || p.status === "published");
+          
+          if (published.length > 0) {
+            setPosts(published.slice(-3).reverse());
+          } else {
+            setPosts(fallbackPosts);
+          }
+        } else {
+          setPosts(fallbackPosts);
         }
       } catch (err) {
         console.error("Failed to sync home page blog feed:", err);
+        setPosts(fallbackPosts);
       } finally {
         setLoading(false);
       }
@@ -41,9 +76,8 @@ export function BlogPreview() {
     fetchLatestPosts();
   }, []);
 
-  // Simple clean helper to calculate read time dynamically based on word count
   const getReadTime = (content: string = "") => {
-    const words = content.split(/\s+/).length;
+    const words = content ? content.split(/\s+/).length : 200;
     const time = Math.ceil(words / 200);
     return `${time < 1 ? 1 : time} min read`;
   };
@@ -63,7 +97,7 @@ export function BlogPreview() {
 
         {loading ? (
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "var(--color-platinum-dim)", padding: "2rem 0" }}>
-            <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> Syncing latest articles...
+            <Loader2 size={16} className="animate-spin" /> Syncing latest articles...
           </div>
         ) : posts.length === 0 ? (
           <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.9rem" }}>No articles published yet. Check back soon!</p>
@@ -84,7 +118,7 @@ export function BlogPreview() {
                 </div>
                 <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", color: "var(--color-platinum)", fontWeight: 400, marginBottom: "0.75rem", lineHeight: 1.35 }}>{post.title}</h3>
                 <p style={{ color: "var(--color-platinum-dim)", fontSize: "0.85rem", lineHeight: 1.7 }}>{post.excerpt}</p>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "1.25rem", color: "var(--color-gold)", fontSize: "0.78rem", fontWeight: 500 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "1rem", color: "var(--color-gold)", fontSize: "0.78rem", fontWeight: 500 }}>
                   Read more <ArrowRight size={13} />
                 </div>
               </Link>

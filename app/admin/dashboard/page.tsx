@@ -64,27 +64,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Checklist */}
-      <div style={{ padding: "1.5rem", background: "var(--color-obsidian-light)", border: "1px solid rgba(201,168,76,0.1)", borderRadius: "0.85rem" }}>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", color: "var(--color-platinum)", fontWeight: 400, marginBottom: "1rem" }}>Setup Checklist</h2>
-        {[
-          { done: true, task: "Website is running locally" },
-          { done: false, task: "Replace placeholder phone number in Footer & Contact page" },
-          { done: false, task: "Replace placeholder email address" },
-          { done: false, task: "Update WhatsApp number (search 27000000000)" },
-          { done: false, task: "Add real photos to Gallery" },
-          { done: false, task: "Deploy to Vercel" },
-          { done: false, task: "Submit sitemap to Google Search Console" },
-          { done: false, task: "Create Google Business Profile" },
-        ].map((item, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.6rem 0", borderBottom: i < 7 ? "1px solid rgba(201,168,76,0.06)" : "none" }}>
-            <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: item.done ? "none" : "1px solid rgba(201,168,76,0.3)", background: item.done ? "#22c55e" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: "0.6rem", color: "white" }}>
-              {item.done ? "✓" : ""}
-            </div>
-            <span style={{ fontSize: "0.82rem", color: item.done ? "var(--color-platinum-dim)" : "var(--color-platinum)", textDecoration: item.done ? "line-through" : "none" }}>{item.task}</span>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

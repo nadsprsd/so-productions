@@ -10,26 +10,60 @@ interface Post {
   excerpt: string;
   createdAt: string;
   slug: string;
+  status?: string;
 }
+
+const fallbackJournal: Post[] = [
+  {
+    _id: "fb1",
+    title: "The Science of Sub-Bass: Engineering Clean Low-End for Live Concerts",
+    category: "Sound Engineering",
+    excerpt: "Discover how to manage phase cancellation and deploy cardiod sub configurations to keep your low-end hitting perfectly clear.",
+    createdAt: new Date().toISOString(),
+    slug: "science-of-sub-bass"
+  },
+  {
+    _id: "fb2",
+    title: "Top 5 Wireless Microphone Systems for Corporate Events in 2026",
+    category: "Audio Systems",
+    excerpt: "An in-depth review of spectrum efficiency, encryption security, and real-world range handling under intense signal congestion.",
+    createdAt: new Date().toISOString(),
+    slug: "wireless-mic-systems-corporate"
+  },
+  {
+    _id: "fb3",
+    title: "Behind the Scenes: Managing FOH Audio for 3,500+ Outdoor Festivals",
+    category: "Festival Sound",
+    excerpt: "How we configured a 96-channel console array profile path and coordinated backline changeovers under tight production limits.",
+    createdAt: new Date().toISOString(),
+    slug: "behind-the-scenes-foh-festival"
+  }
+];
 
 export default function PublicBlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch the live blog data we save in data/blog.json
   useEffect(() => {
     async function fetchPublicPosts() {
       try {
-        // We call our unified local backend route
         const res = await fetch("/api/admin/blog");
         if (res.ok) {
           const data = await res.json();
-          // Filter to show only published posts to the public
-          const published = data.filter((p: any) => p.status === "published");
-          setPosts(published);
+          // Safe checking: Display post if status field matches published or is omitted entirely
+          const published = data.filter((p: any) => !p.status || p.status === "published");
+          
+          if (published.length > 0) {
+            setPosts(published);
+          } else {
+            setPosts(fallbackJournal);
+          }
+        } else {
+          setPosts(fallbackJournal);
         }
       } catch (err) {
         console.error("Failed to load public blog index:", err);
+        setPosts(fallbackJournal);
       } finally {
         setLoading(false);
       }
@@ -40,7 +74,7 @@ export default function PublicBlogPage() {
   if (loading) {
     return (
       <div style={{ padding: "12rem 2rem", background: "var(--color-obsidian)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", color: "var(--color-platinum-dim)" }}>
-        <Loader2 size={20} style={{ animation: "spin 1s linear infinite" }} /> Loading Articles...
+        <Loader2 size={20} className="animate-spin" /> Loading Articles...
       </div>
     );
   }
@@ -66,7 +100,7 @@ export default function PublicBlogPage() {
                     </span>
                     <span style={{ fontSize: "0.75rem", color: "var(--color-platinum-dim)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
                       <Calendar size={12} />
-                      {new Date(post.createdAt).toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric" })}
+                      {new Date(post.createdAt || new Date()).toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric" })}
                     </span>
                   </div>
                   
