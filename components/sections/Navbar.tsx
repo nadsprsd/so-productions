@@ -62,7 +62,6 @@ export function Navbar() {
         ref={navRef}
         style={{
           position: "fixed",
-          // 🛠️ Gives the container top breathing room on phones so it doesn't clip the screen boundary
           top: isMobile ? "1rem" : "1.5rem",
           left: "50%",
           transform: "translateX(-50%)",
@@ -75,13 +74,12 @@ export function Navbar() {
         <div
           style={{
             display: "flex",
+            flexDirection: "row", // 🛠️ FORCES logo and hamburger to stay perfectly inline horizontally
             alignItems: "center",
             justifyContent: "space-between",
-            // 🛠️ Reduced padding on phones to free up internal vertical space
-            padding: isMobile ? "0.65rem 1.5rem" : scrolled ? "0.85rem 2rem" : "1.1rem 2.5rem",
-            // 🛠️ Lowered background opacity on mobile down to 0.4 for a lightweight translucent look
+            padding: isMobile ? "0.65rem 1.25rem" : scrolled ? "0.85rem 2rem" : "1.1rem 2.5rem",
             background: isMobile 
-              ? (menuOpen ? "rgba(8,8,8,0.96)" : "rgba(8,8,8,0.4)") 
+              ? (menuOpen ? "rgba(8,8,8,0.96)" : "rgba(8,8,8,0.75)") // 🛠️ Higher mobile opacity protects text overlapping
               : (scrolled ? "rgba(8,8,8,0.92)" : "rgba(8,8,8,0.55)"),
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
@@ -101,14 +99,15 @@ export function Navbar() {
               alignItems: "center",
               gap: "0.5rem",
               textDecoration: "none",
-              flexShrink: 0,
+              flexShrink: 0, // 🛠️ Prevents crushing inward on small views
+              whiteSpace: "nowrap", // 🛠️ Explicitly bars textual wrapping breaks
             }}
           >
             <WaveformLogo />
             <span
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: isMobile ? "0.95rem" : "1.15rem",
+                fontSize: isMobile ? "0.9rem" : "1.15rem", // 🛠️ Perfectly proportioned mobile typography
                 fontWeight: 500,
                 color: "var(--color-platinum)",
                 letterSpacing: "0.04em",
@@ -150,7 +149,7 @@ export function Navbar() {
           )}
 
           {/* CTA + Hamburger Trigger */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexShrink: 0 }}>
             {!isMobile && (
               <Link href="/contact" className="btn-primary" style={{ padding: "0.65rem 1.5rem", fontSize: "0.7rem" }}>
                 <span>Book Now</span>
@@ -234,7 +233,7 @@ export function Navbar() {
 function WaveformLogo() {
   const bars = [4, 7, 10, 14, 10, 7, 4, 7, 10, 7];
   return (
-    <svg width="24" height="16" viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="16" viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
       {bars.map((h, i) => (
         <rect key={i} x={i * 3.2} y={(20 - h) / 2} width="2.2" height={h} rx="1.1" fill="url(#waveGrad)" />
       ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { gsap } from "gsap";
@@ -21,8 +21,13 @@ export function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const notesRef = useRef<HTMLDivElement>(null);
+  const [windowWidth, setWindowWidth] = useState(1200); // Safe design default fallback for compilation execution
 
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.fromTo(".hero-eyebrow", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9 })
@@ -37,7 +42,6 @@ export function HeroSection() {
         { opacity: 0.4, scale: 1, stagger: 0.3, duration: 1, ease: "back.out(1.7)", delay: 1.5 }
       );
 
-      // Parallax scroll
       ScrollTrigger.create({
         trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.5,
         onUpdate: (self) => {
@@ -47,18 +51,22 @@ export function HeroSection() {
         },
       });
 
-      // Waveform animation
       document.querySelectorAll(".hero-wave-bar").forEach((bar, i) => {
         gsap.to(bar, { scaleY: gsap.utils.random(0.3, 1), duration: gsap.utils.random(0.4, 0.9), repeat: -1, yoyo: true, ease: "sine.inOut", delay: i * 0.08 });
       });
     }, heroRef);
-    return () => ctx.revert();
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+
+  const isMobile = windowWidth < 768;
 
   return (
     <section ref={heroRef} style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden", paddingTop: "6rem", paddingBottom: "4rem" }}>
       
-      {/* Real background image from Unsplash - concert/stage */}
       <div className="hero-bg-img" style={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <Image
           src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=80"
@@ -68,13 +76,10 @@ export function HeroSection() {
           priority
           sizes="100vw"
         />
-        {/* Dark overlay */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(8,8,8,0.75) 0%, rgba(8,8,8,0.65) 50%, rgba(8,8,8,0.92) 100%)" }} />
-        {/* Gold tint */}
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%)" }} />
       </div>
 
-      {/* Floating music notes */}
       <div ref={notesRef} style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1 }}>
         {NOTES.map((note, i) => (
           <div key={i} className="float-note" style={{ position: "absolute", left: note.x, top: note.y, opacity: 0, animation: `floatNote ${note.dur}s ease-in-out ${note.delay}s infinite` }}>
@@ -83,9 +88,7 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* Content */}
       <div className="container-main" style={{ textAlign: "center", position: "relative", zIndex: 2 }}>
-        {/* Waveform */}
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "4px", height: "48px", marginBottom: "2.5rem" }}>
           {Array.from({ length: 18 }).map((_, i) => (
             <div key={i} className="hero-wave-bar" style={{ width: "3px", height: `${14 + Math.sin(i * 0.6) * 10}px`, background: "linear-gradient(to top, var(--color-gold-dim), var(--color-gold-light))", borderRadius: "2px", transformOrigin: "bottom" }} />
@@ -108,7 +111,7 @@ export function HeroSection() {
           <Link href="/works" className="btn-ghost">View Our Work</Link>
         </div>
 
-        {/* Stats */}
+        {/* Stats Grid Matrix */}
         <div className="hero-stats glass" style={{ display: "inline-flex", flexWrap: "wrap", justifyContent: "center", opacity: 0, borderRadius: "1rem", overflow: "hidden" }}>
           {[
             { value: "6+", label: "Years" },
@@ -116,7 +119,17 @@ export function HeroSection() {
             { value: "50+", label: "Clients" },
             { value: "100%", label: "Satisfaction" },
           ].map((stat, i) => (
-            <div key={i} style={{ padding: "1.1rem 2rem", borderRight: i < 3 ? "1px solid rgba(201,168,76,0.15)" : "none", textAlign: "center" }}>
+            <div 
+              key={i} 
+              style={{ 
+                padding: "1.1rem 2rem", 
+                minWidth: "135px",
+                textAlign: "center",
+                // 🛠️ Structural Responsive Borders prevent lines from slashing stacked metrics on wrap
+                borderRight: i < 3 && !isMobile ? "1px solid rgba(201,168,76,0.15)" : "none", 
+                borderBottom: i < 3 && isMobile ? "1px solid rgba(201,168,76,0.12)" : "none",
+              }}
+            >
               <div className="display-sm" style={{ color: "var(--color-gold)", lineHeight: 1 }}>{stat.value}</div>
               <div style={{ fontSize: "0.68rem", color: "var(--color-platinum-dim)", letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "0.3rem" }}>{stat.label}</div>
             </div>
@@ -124,7 +137,6 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div style={{ position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", animation: "floatNote 2s ease-in-out infinite", zIndex: 2 }}>
         <span style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--color-platinum-dim)" }}>Scroll</span>
         <ChevronDown size={16} color="var(--color-gold-dim)" />
