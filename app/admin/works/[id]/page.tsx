@@ -63,10 +63,11 @@ export default function EditCaseStudy({ params }: PageProps) {
       const res = await fetch("/api/admin/works", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // 🛠️ FIXED: Spreads form object FIRST, then explicitly locks id to prevent duplicate overrides
         body: JSON.stringify({ 
           action: "update", 
-          id: form.id, // Keeps the original reference locked 
           ...form,
+          id: form.id, 
           tags: form.tags.split(",").map(t => t.trim()).filter(Boolean)
         })
       });
